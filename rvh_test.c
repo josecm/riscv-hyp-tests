@@ -24,6 +24,9 @@ uint64_t ecall(uint64_t a0, uint64_t a1)
     return ecall_args[0];
 }
 
+static inline bool is_user(int priv) {
+    return priv == PRIV_VU || priv == PRIV_HU;
+}
 
 void set_prev_priv(int priv){
 
@@ -106,6 +109,10 @@ void goto_priv(int target_priv){
     static bool on_going = false;
 
     DEBUG("goto_priv: real = %s, target = %s, curr = %s",  priv_strs[real_priv], priv_strs[target_priv], priv_strs[curr_priv]);
+
+    if(is_user(target_priv) && is_user(curr_priv)) {
+        goto_priv(PRIV_M);
+    }
 
     if(real_priv == target_priv || target_priv >= PRIV_MAX){
         if(on_going)
