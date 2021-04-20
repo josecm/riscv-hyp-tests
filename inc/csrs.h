@@ -55,6 +55,8 @@
 
 #define MSTATUS_MPRV_OFF    (17)
 #define MSTATUS_MPRV    (1ULL << MSTATUS_MPRV_OFF)
+#define MSTATUS_TW_OFF  (21)
+#define MSTATUS_TW   (1ULL << MSTATUS_TW_OFF)
 #define MSTATUS_GVA_OFF    (38)
 #define MSTATUS_GVA    (1ULL << MSTATUS_GVA_OFF)
 
@@ -350,6 +352,10 @@ static inline uint64_t hsvd(uintptr_t addr, uint64_t value){
         ".insn r 0x73, 0x4, 0x37, x0, %1, %0\n\t"
         :: "r"(value), "r"(addr) : "memory");
     return value;
+}
+
+static inline void wfi() {
+    asm ("wfi" ::: "memory");
 }
 
 
