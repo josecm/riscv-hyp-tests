@@ -56,10 +56,10 @@ LDFLAGS = -ffreestanding -nostartfiles -static $(GENERIC_FLAGS)
 all: $(pre_targets) $(TARGET).bin
 
 $(TARGET).bin: $(TARGET).elf
+	$(OBJCOPY) -O binary $< $@
 
 $(TARGET).elf: $(objs) $(ld_file_final)
 	$(CC) $(LDFLAGS) -T$(ld_file_final) $(objs) -o $@
-	$(OBJCOPY) -O binary $@ $(TARGET).bin
 	$(OBJDUMP) -S $@ > $(TARGET).asm
 	$(READELF) -a -W $@ > $(@).txt
 
