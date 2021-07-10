@@ -35,7 +35,7 @@ c_srcs := main.c page_tables.c rvh_test.c interrupt_tests.c\
 	translation_tests.c	test_register.c virtual_instruction.c\
 	hfence_tests.c wfi_tests.c\
 	$(addprefix $(plat_dir)/, $(notdir $(wildcard $(plat_dir)/*.c)))
-asm_srcs := boot.S handlers.S  code_test.S  $(wildcard $(plat_dir)/*.S)
+asm_srcs := boot.S handlers.S  $(wildcard $(plat_dir)/*.S)
 ld_file:=linker.ld
 inc_dirs := ./inc $(plat_dir)/inc
 inc_dirs := $(addprefix -I, $(inc_dirs))

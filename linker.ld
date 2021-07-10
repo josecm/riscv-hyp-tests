@@ -47,9 +47,6 @@ SECTIONS {
 	} 
 
 	. = MEM_BASE + 0x1ff000;
-	.code_test : {
-		*(.code_test)
-	}
     
     . = ALIGN(16) + STACK_SIZE;
     __stack_top = .;
