@@ -8,3 +8,4 @@ TEST_REGISTER(check_xip_regs);
 TEST_REGISTER(interrupt_tests);
 TEST_REGISTER(virtual_instruction);
 TEST_REGISTER(hfence_test);
+TEST_REGISTER(tinst_tests);

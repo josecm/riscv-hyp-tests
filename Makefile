@@ -1,5 +1,5 @@
 
-CROSS_COMPILE := riscv64-unknown-elf-
+CROSS_COMPILE ?= riscv64-unknown-elf-
 CC:=$(CROSS_COMPILE)gcc
 AS:=$(CROSS_COMPILE)as
 LD:=$(CROSS_COMPILE)ld
@@ -33,7 +33,7 @@ endif
 TARGET := $(build_dir)/rvh_test
 c_srcs := main.c page_tables.c rvh_test.c interrupt_tests.c\
 	translation_tests.c	test_register.c virtual_instruction.c\
-	hfence_tests.c\
+	hfence_tests.c tinst_tests.c\
 	$(addprefix $(plat_dir)/, $(notdir $(wildcard $(plat_dir)/*.c)))
 asm_srcs := boot.S handlers.S  code_test.S  $(wildcard $(plat_dir)/*.S)
 ld_file:=linker.ld

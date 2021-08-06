@@ -94,6 +94,7 @@ extern struct exception {
     uint64_t cause;
     uint64_t epc;
     uint64_t tval;
+    uint64_t tinst;
     uint64_t tval2;
     bool gva;
     bool xpv;
@@ -182,6 +183,7 @@ failed:\
     INFO("excpt.cause = 0x%llx", excpt.cause);\
     INFO("excpt.tval = 0x%llx", excpt.tval);\
     INFO("excpt.tval2 = 0x%llx", excpt.tval2);\
+    INFO("excpt.tinst = 0x%llx", excpt.tinst);\
 }
 
 #define DEBUG_PRINT(var) {\
@@ -198,6 +200,7 @@ failed:\
     DEBUG("excpt.cause = 0x%llx", excpt.cause);\
     DEBUG("excpt.tval = 0x%llx", excpt.tval);\
     DEBUG("excpt.tval2 = 0x%llx", excpt.tval2);\
+    INFO("excpt.tinst = 0x%llx", excpt.tinst);\
 }
 
 #define check_csr_wrrd(name, addr, wr, rd){\
