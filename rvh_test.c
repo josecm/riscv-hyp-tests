@@ -198,11 +198,13 @@ uint64_t mhandler(){
     uint64_t epc = CSRR(mepc);
     uint64_t tval = CSRR(mtval);
     uint64_t tval2 = CSRR(CSR_MTVAL2);
+    uint64_t tinst= CSRR(CSR_MTINST);
 
     VERBOSE("machine handler (mcause 0x%llx)", cause);
     DEBUG("mepc = 0x%lx", epc);
     DEBUG("mtval = 0x%lx", tval);
     DEBUG("mtval2 = 0x%lx", tval2);
+    DEBUG("mtinst = 0x%lx", tinst);
     DEBUG("mpp = 0x%lx", (CSRR(mstatus) >> 11) & 0x3);
     DEBUG("mpv = 0x%lx", (CSRR(mstatus) >> 39) & 0x1);
     DEBUG("gva = 0x%lx", (CSRR(mstatus) >> MSTATUS_GVA_OFF) & 0x1);
@@ -222,6 +224,7 @@ uint64_t mhandler(){
     excpt.cause = cause;
     excpt.epc = epc;
     excpt.tval = tval;
+    excpt.tinst = tinst;
     excpt.tval2 = tval2;
     excpt.gva = !!((CSRR(mstatus) >> MSTATUS_GVA_OFF) & 0x1);
     excpt.xpv = !!((CSRR(mstatus) >> 39) & 0x1);
@@ -248,11 +251,13 @@ uint64_t hshandler(){
     uint64_t epc = CSRR(sepc);
     uint64_t tval = CSRR(stval);
     uint64_t htval = CSRR(CSR_HTVAL);
+    uint64_t htinst = CSRR(CSR_HTINST);
 
     VERBOSE("hypervisor handler scause (scause = 0x%llx)", cause);
     DEBUG("sepc = 0x%lx", epc);
     DEBUG("stval = 0x%lx",  tval);
     DEBUG("htval = 0x%lx",  htval);
+    DEBUG("htinst = 0x%lx",  htinst);
     DEBUG("hstatus = 0x%lx",  CSRR(CSR_HSTATUS));
     DEBUG("spv = 0x%lx", (CSRR(CSR_HSTATUS) >> 7) & 0x1);
     DEBUG("spvp = 0x%lx", (CSRR(CSR_HSTATUS) >> 8) & 0x1);
@@ -277,6 +282,7 @@ uint64_t hshandler(){
     excpt.cause = cause;
     excpt.epc = epc;
     excpt.tval = tval;
+    excpt.tinst = htinst;
     excpt.tval2 = htval;
     excpt.gva = !!((CSRR(CSR_HSTATUS) >> HSTATUS_GVA_OFF) & 0x1);
     excpt.xpv = !!((CSRR(CSR_HSTATUS) >> 7) & 0x1);
