@@ -359,6 +359,8 @@ void reset_state(){
     CSRW(mscratch, 0ULL);
     CSRW(mepc, 0ULL);
     CSRW(mtval, 0ULL);
+    CSRW(CSR_MTINST, 0ULL);
+    CSRW(CSR_MTVAL2, 0ULL);
     //what about pmp register?
     CSRW(sstatus, 0ULL);
     //CSRW(stvec, 0ULL);
