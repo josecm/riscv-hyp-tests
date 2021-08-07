@@ -9,3 +9,4 @@ TEST_REGISTER(interrupt_tests);
 TEST_REGISTER(virtual_instruction);
 TEST_REGISTER(hfence_test);
 TEST_REGISTER(wfi_exception_tests);
+TEST_REGISTER(tinst_tests);
