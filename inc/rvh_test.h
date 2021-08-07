@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <csrs.h>
+#include <instructions.h>
 #include <platform.h>
 
 #define STR_HELPER(x) #x
