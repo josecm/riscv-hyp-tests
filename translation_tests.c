@@ -293,7 +293,7 @@ bool m_and_hs_using_vs_access(){
     TEST_ASSERT("hs hlvxwu on vs-level non-exec page leads to lpf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF  && 
-        excpt.gva == true &&
+        excpt.gva == false &&
         excpt.xpv == false
     );
 
