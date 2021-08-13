@@ -274,7 +274,7 @@ AMO_INSTRUCTION(amomax_w, "amomax.w", uint32_t);
 AMO_INSTRUCTION(amominu_w, "amominu.w", uint32_t);
 AMO_INSTRUCTION(amomaxu_w, "amomaxu.w", uint32_t);
 AMO_INSTRUCTION(amoswap_d, "amoswap.d", uint64_t);
-AMO_INSTRUCTION(amosadd_d, "amosadd.d", uint64_t);
+AMO_INSTRUCTION(amoadd_d, "amoadd.d", uint64_t);
 AMO_INSTRUCTION(amoxor_d, "amoxor.d", uint64_t);
 AMO_INSTRUCTION(amoand_d, "amoand.d", uint64_t);
 AMO_INSTRUCTION(amoor_d, "amoor.d", uint64_t);
