@@ -2,6 +2,7 @@
 #include <page_tables.h>
 
 #define TINST_LOAD(instuction) ((instruction) & 0x7fff)
+#define TINST_STORE(instuction) ((instruction) & 0x1f0707f)
 
 bool tinst_tests(){
     
@@ -76,6 +77,45 @@ bool tinst_tests(){
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF &&
         excpt.tinst == TINST_LOAD(instruction)
+    );
+
+    value = 0xdeadbeef;
+
+    TEST_SETUP_EXCEPT();
+    sb(vaddr_f,value);
+    if(excpt.triggered) instruction = *((uint16_t*)excpt.epc) | *((uint16_t*)excpt.epc + 2) << 16;
+    printf("instruction %x \r\n", instruction);
+    TEST_ASSERT("correct tinst when executing a sb which results in a spf",
+        excpt.triggered == true && 
+        excpt.cause == CAUSE_SPF &&
+        excpt.tinst == TINST_STORE(instruction)
+    );
+
+    TEST_SETUP_EXCEPT();
+    sh(vaddr_f,value);
+    if(excpt.triggered) instruction = *((uint16_t*)excpt.epc) | *((uint16_t*)excpt.epc + 2) << 16;
+    TEST_ASSERT("correct tinst when executing a sh which results in a spf",
+        excpt.triggered == true && 
+        excpt.cause == CAUSE_SPF &&
+        excpt.tinst == TINST_STORE(instruction)
+    );
+
+    TEST_SETUP_EXCEPT();
+    sw(vaddr_f,value);
+    if(excpt.triggered) instruction = *((uint16_t*)excpt.epc) | *((uint16_t*)excpt.epc + 2) << 16;
+    TEST_ASSERT("correct tinst when executing a sw which results in a spf",
+        excpt.triggered == true && 
+        excpt.cause == CAUSE_SPF &&
+        excpt.tinst == TINST_STORE(instruction)
+    );
+
+    TEST_SETUP_EXCEPT();
+    sd(vaddr_f,value);
+    if(excpt.triggered) instruction = *((uint16_t*)excpt.epc) | *((uint16_t*)excpt.epc + 2) << 16;
+    TEST_ASSERT("correct tinst when executing a sd which results in a spf",
+        excpt.triggered == true && 
+        excpt.cause == CAUSE_SPF &&
+        excpt.tinst == TINST_STORE(instruction)
     );
     TEST_END();
 }
