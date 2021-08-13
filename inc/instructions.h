@@ -177,7 +177,7 @@ LOAD_INSTRUCTION(lbu, "lbu", uint8_t);
 LOAD_INSTRUCTION(lh, "lh", uint16_t);
 LOAD_INSTRUCTION(lhu, "lhu", uint16_t); 
 LOAD_INSTRUCTION(lw, "lw", uint32_t); 
-LOAD_INSTRUCTION(lwu, "lwu", uint16_t);
+LOAD_INSTRUCTION(lwu, "lwu", uint32_t);
 LOAD_INSTRUCTION(ld, "ld", uint64_t);
 
 
