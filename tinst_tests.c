@@ -1,6 +1,20 @@
 #include <rvh_test.h>
 #include <page_tables.h>
 
+/**
+ * TODO:
+ *  [] test traps to hs
+ *  [] test fp load/store instructions
+ *  [] test hypervisor load/store instructions
+ *  [] test address offset field for imnplementations that support
+ * unaligned acceses or have highest priority for page fault than for
+ * unaligned access exceptions.
+ *  [] test pseudo-instructions
+ *  [] test tinst is written zero on:
+ *      - interrupts
+ *      - other cases (?)
+ */
+
 #define TINST_LOAD(ins) ((ins) & (INS_OPCODE | INS_RD | INS_FUNCT3))
 #define TINST_STORE(ins) ((ins) & (INS_OPCODE | INS_FUNCT3 | INS_RS2))
 #define TINST_AMO(ins) ((ins) & (~TINST_ADDROFF))
