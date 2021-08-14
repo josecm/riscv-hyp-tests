@@ -10,7 +10,25 @@
 #define INS_RS2     BIT_MASK(20, 5)
 #define INS_FUNCT7  BIT_MASK(25, 7)
 
-#define INS_COMPRESSED(ins) (((ins) & 0x3) != 0b11)
+#define INS_C_OPCODE        BIT_MASK(0, 2)  
+#define INS_C_FUNCT3_OFF    (13)
+#define INS_C_FUNCT3_LEN    (3)
+#define INS_C_FUNCT3_MASK   BIT_MASK(INS_C_FUNCT3_OFF, INS_C_FUNCT3_LEN)
+#define INS_C_FUNCT3        INS_C_FUNCT3_MASK
+#define INS_C_RS1_OFF       (7)
+#define INS_C_RS1_LEN       (3)
+#define INS_C_RS1_MASK      BIT_MASK(INS_C_RS1_OFF, INS_C_RS1_LEN)
+#define INS_C_RDRS2_OFF     (2)
+#define INS_C_RDRS2_LEN     (3)
+#define INS_C_RDRS2_MASK    BIT_MASK(INS_C_RDRS2_OFF, INS_C_RDRS2_LEN)
+#define INS_C_IMM0_OFF      (5)
+#define INS_C_IMM0_LEN      (2)
+#define INS_C_IMM0_MASK     BIT_MASK(INS_C_IMM0_OFF, INS_C_IMM0_LEN)
+#define INS_C_IMM1_OFF      (10)
+#define INS_C_IMM1_LEN      (3)
+#define INS_C_IMM1_MASK     BIT_MASK(INS_C_IMM1_OFF, INS_C_IMM1_LEN)
+
+#define INS_COMPRESSED(ins) (((ins) & INS_C_OPCODE) != 0b11)
 
 #ifndef __ASSEMBLER__
 
