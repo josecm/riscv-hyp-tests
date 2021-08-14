@@ -106,6 +106,22 @@ bool tinst_tests(){
     );
 
     TEST_SETUP_EXCEPT();
+    value = lr_w(vaddr_f);
+    TEST_ASSERT("correct tinst when executing a lr.w which results in a lpf",
+        excpt.triggered == true && 
+        excpt.cause == CAUSE_LPF &&
+        TINST_CHECK(TINST_AMO)
+    );
+
+    TEST_SETUP_EXCEPT();
+    value = sc_w(vaddr_f, value);
+    TEST_ASSERT("correct tinst when executing a sc.w which results in a spf",
+        excpt.triggered == true && 
+        excpt.cause == CAUSE_SPF &&
+        TINST_CHECK(TINST_AMO)
+    );
+
+    TEST_SETUP_EXCEPT();
     value = amoswap_w(vaddr_f,value);
     TEST_ASSERT("correct tinst when executing a amoswap.w which results in a spf",
         excpt.triggered == true && 
