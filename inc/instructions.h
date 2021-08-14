@@ -1,6 +1,8 @@
 #ifndef INSTRUCTIONS_H
 #define INSTRUCTIONS_H
 
+#define INS_COMPRESSED(ins) (((ins) & 0x3) != 0b11)
+
 #ifndef __ASSEMBLER__
 
 #define CSR_STR(s) _CSR_STR(s)
