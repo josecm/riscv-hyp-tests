@@ -178,7 +178,10 @@ static inline void wfi() {
     static inline type name(uintptr_t addr){ \
         type value; \
         asm volatile( \
+            ".option push\n\t" \
+            ".option norvc\n\t" \
             instruction " %0, 0(%1)\n\t" \
+            ".option pop\n\t" \
             : "=r"(value) : "r"(addr) : "memory"); \
         return value; \
     }
@@ -195,7 +198,10 @@ LOAD_INSTRUCTION(ld, "ld", uint64_t);
 #define STORE_INSTRUCTION(name, instruction, type) \
     static inline void name(uintptr_t addr, type value){ \
         asm volatile( \
+            ".option push\n\t" \
+            ".option norvc\n\t" \
             instruction " %0, 0(%1)\n\t" \
+            ".option pop\n\t" \
             :: "r"(value), "r"(addr):  "memory" \
         ); \
     }
