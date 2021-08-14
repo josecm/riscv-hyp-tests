@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <encoding.h>
 #include <csrs.h>
 #include <instructions.h>
 #include <platform.h>

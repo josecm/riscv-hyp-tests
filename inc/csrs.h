@@ -4,34 +4,6 @@
 
 #include <util.h>
 
-#define CSR_VSSTATUS 0x200
-#define CSR_VSIE 0x204
-#define CSR_VSTVEC 0x205
-#define CSR_VSSCRATCH 0x240
-#define CSR_VSEPC 0x241
-#define CSR_VSCAUSE 0x242
-#define CSR_VSTVAL 0x243
-#define CSR_VSIP 0x244
-#define CSR_VSATP 0x280
-
-#define CSR_HSTATUS 0x600
-#define CSR_HEDELEG 0x602
-#define CSR_HIDELEG 0x603
-#define CSR_HIE 0x604
-#define CSR_HTIMEDELTA 0x605
-#define CSR_HTIMEDELTAH 0x615
-#define CSR_HCOUNTEREN 0x606
-#define CSR_HGEIE 0x607
-#define CSR_HTVAL 0x643
-#define CSR_HIP 0x644
-#define CSR_HVIP 0x645
-#define CSR_HTINST 0x64A
-#define CSR_HGATP 0x680
-#define CSR_HGEIP 0xE07
-
-#define CSR_MTINST 0x34A
-#define CSR_MTVAL2 0x34B
-
 #define STVEC_MODE_OFF (0)
 #define STVEC_MODE_LEN (2)
 #define STVEC_MODE_MSK BIT_MASK(STVEC_MODE_OFF, STVEC_MODE_LEN)
