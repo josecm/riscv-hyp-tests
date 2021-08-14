@@ -1,9 +1,9 @@
 #include <rvh_test.h>
 #include <page_tables.h>
 
-#define TINST_LOAD(instuction) ((instruction) & (INS_OPCODE | INS_RD | INS_FUNCT3))
-#define TINST_STORE(instuction) ((instruction) & (INS_OPCODE | INS_FUNCT3 | INS_RS2))
-#define TINST_AMO(instuction) ((instruction) & (~TINST_ADDROFF))
+#define TINST_LOAD(ins) ((ins) & (INS_OPCODE | INS_RD | INS_FUNCT3))
+#define TINST_STORE(ins) ((ins) & (INS_OPCODE | INS_FUNCT3 | INS_RS2))
+#define TINST_AMO(ins) ((ins) & (~TINST_ADDROFF))
 
 bool tinst_tests(){
     
