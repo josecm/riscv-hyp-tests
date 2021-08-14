@@ -1,6 +1,15 @@
 #ifndef INSTRUCTIONS_H
 #define INSTRUCTIONS_H
 
+#include <util.h>
+
+#define INS_OPCODE  BIT_MASK(0, 7)
+#define INS_RD      BIT_MASK(7, 5)
+#define INS_FUNCT3  BIT_MASK(12, 3)
+#define INS_RS1     BIT_MASK(15, 5)
+#define INS_RS2     BIT_MASK(20, 5)
+#define INS_FUNCT7  BIT_MASK(25, 7)
+
 #define INS_COMPRESSED(ins) (((ins) & 0x3) != 0b11)
 
 #ifndef __ASSEMBLER__

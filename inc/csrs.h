@@ -2,6 +2,8 @@
 #ifndef CSRS_H
 #define CSRS_H
 
+#include <util.h>
+
 #define CSR_VSSTATUS 0x200
 #define CSR_VSIE 0x204
 #define CSR_VSTVEC 0x205
@@ -196,5 +198,9 @@
 #define HCOUNTEREN_IR   (1ULL << 2)
 #define HCOUNTEREN(N)   (1ULL << (N))
 
+#define TINST_ADDROFF_OFF (15)
+#define TINST_ADDROFF_LEN (5)
+#define TINST_ADDROFF_MASK BIT_MASK(TINST_ADDROFF_OFF, TINST_ADDROFF_LEN)
+#define TINST_ADDROFF TINST_ADDROFF_MASK
 
 #endif /* __ARCH_CSRS_H__ */
