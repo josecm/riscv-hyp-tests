@@ -341,6 +341,33 @@ uint64_t vshandler(){
     return_from_exception(temp_priv, curr_priv, cause, epc);
 }
 
+uint32_t expand_compressed_instruction(uint16_t ins) {
+
+    if(!INS_COMPRESSED(ins)) {
+        ERROR("trying to expand non-compressed instruction");
+    }
+
+    if(INS_MATCH_C_LW(ins) || INS_MATCH_C_LD(ins) || INS_MATCH_C_SW(ins) || INS_MATCH_C_SD(ins)){
+        bool is_load = INS_MATCH_C_LW(ins) || INS_MATCH_C_LD(ins); 
+        bool is_double = INS_MATCH_C_LD(ins) || INS_MATCH_C_SD(ins); 
+        uint32_t opcode_funct3 = is_double? 
+            (is_load ? MATCH_LD : MATCH_SD):
+            (is_load ? MATCH_LW : MATCH_SW);
+        uint32_t rd_rs2 =  ((ins & INS_C_RDRS2_MASK) >> INS_C_RDRS2_OFF) + 8;
+        uint32_t rs1 = ((ins & INS_C_RS1_MASK) >> INS_C_RS1_OFF) + 8;
+        uint32_t imm = ((ins & INS_C_IMM1_MASK)  >> INS_C_IMM1_OFF) << 3 |
+            is_double ? 
+            ((ins & INS_C_IMM0_MASK)  >> INS_C_IMM0_OFF) << 6 :
+            ((ins & INS_C_IMM0_MASK)  >> INS_C_IMM0_OFF) & 0x1 << 6 |
+            ((ins & INS_C_IMM0_MASK)  >> INS_C_IMM0_OFF) >> 1 & 0x1 << 2;
+        return opcode_funct3 | rd_rs2 << (is_load ? 7 : 20) | 
+            rs1 << 15 | (imm & 0x1f) << 7 | (imm >> 5) << 25;
+    } else {
+        ERROR("expansion not implemented for target compressed instruction: 0x%x", ins);
+    }
+
+}
+
 extern void hshandler_entry();
 extern void mhandler_entry();
 extern void vshandler_entry();

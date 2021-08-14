@@ -266,6 +266,7 @@ static inline uint32_t read_instruction(uintptr_t addr) {
     return instruction;
 }
 
+uint32_t expand_compressed_instruction(uint16_t ins);
 void reset_state();
 void set_prev_priv(int target_priv);
 void goto_priv(int target_priv);
