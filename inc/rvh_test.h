@@ -249,6 +249,22 @@ static inline void write8(uintptr_t addr, uint8_t val){
     *((volatile uint8_t*) addr) = val;    
 }
 
+static inline uint32_t read_instruction(uintptr_t addr) {
+
+    uint32_t instruction = 0;
+
+    if((addr & 0b1) != 0) {
+        ERROR("trying to read unaligned instruction (%s, %d)", __func__, __LINE__);
+    }
+
+    instruction = *((uint16_t*)addr);
+    if(!INS_COMPRESSED(instruction)) {
+        instruction |= (*((uint16_t*)(addr + 2)) << 16);
+    }
+
+    return instruction;
+}
+
 void reset_state();
 void set_prev_priv(int target_priv);
 void goto_priv(int target_priv);
