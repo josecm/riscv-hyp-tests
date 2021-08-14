@@ -5,6 +5,8 @@
 #define TINST_STORE(ins) ((ins) & (INS_OPCODE | INS_FUNCT3 | INS_RS2))
 #define TINST_AMO(ins) ((ins) & (~TINST_ADDROFF))
 #define TINST_CHECK(CHECK) (excpt.tinst == 0 || excpt.tinst == CHECK(read_instruction(excpt.epc)))
+#define TINST_CHECK_COMPRESSED(CHECK) (excpt.tinst == 0 ||\
+    excpt.tinst == CHECK(expand_compressed_instruction(read_instruction(excpt.epc)) & ~0b10ULL))
 
 bool tinst_tests(){
     
@@ -103,6 +105,38 @@ bool tinst_tests(){
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
         TINST_CHECK(TINST_STORE)
+    );
+
+    TEST_SETUP_EXCEPT();
+    value = c_lw(vaddr_f);
+    TEST_ASSERT("correct tinst when executing a c.lw which results in a lpf",
+        excpt.triggered == true &&
+        excpt.cause == CAUSE_LPF &&
+        TINST_CHECK_COMPRESSED(TINST_LOAD)
+    );
+
+    TEST_SETUP_EXCEPT();
+    value = c_ld(vaddr_f);
+    TEST_ASSERT("correct tinst when executing a c.ld which results in a lpf",
+        excpt.triggered == true && 
+        excpt.cause == CAUSE_LPF &&
+        TINST_CHECK_COMPRESSED(TINST_LOAD)
+    );
+
+    TEST_SETUP_EXCEPT();
+    c_sw(vaddr_f, value);
+    TEST_ASSERT("correct tinst when executing a c.lw which results in a lpf",
+        excpt.triggered == true &&
+        excpt.cause == CAUSE_SPF &&
+        TINST_CHECK_COMPRESSED(TINST_STORE)
+    );
+
+    TEST_SETUP_EXCEPT();
+    c_sd(vaddr_f, value);
+    TEST_ASSERT("correct tinst when executing a c.sd which results in a lpf",
+        excpt.triggered == true &&
+        excpt.cause == CAUSE_SPF &&
+        TINST_CHECK_COMPRESSED(TINST_STORE)
     );
 
     TEST_SETUP_EXCEPT();
