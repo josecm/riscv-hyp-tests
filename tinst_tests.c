@@ -4,6 +4,7 @@
 #define TINST_LOAD(ins) ((ins) & (INS_OPCODE | INS_RD | INS_FUNCT3))
 #define TINST_STORE(ins) ((ins) & (INS_OPCODE | INS_FUNCT3 | INS_RS2))
 #define TINST_AMO(ins) ((ins) & (~TINST_ADDROFF))
+#define TINST_CHECK(CHECK) (excpt.tinst == 0 || excpt.tinst == CHECK(read_instruction(excpt.epc)))
 
 bool tinst_tests(){
     
@@ -19,7 +20,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a lb which results in a lpf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF &&
-        excpt.tinst == TINST_LOAD(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_LOAD)
     );
 
     TEST_SETUP_EXCEPT();
@@ -27,7 +28,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a lbu which results in a lpf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF &&
-        excpt.tinst == TINST_LOAD(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_LOAD)
     );
 
     TEST_SETUP_EXCEPT();
@@ -35,7 +36,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a lh which results in a lpf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF &&
-        excpt.tinst == TINST_LOAD(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_LOAD)
     );
 
     TEST_SETUP_EXCEPT();
@@ -43,7 +44,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a lhu which results in a lpf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF &&
-        excpt.tinst == TINST_LOAD(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_LOAD)
     );
 
     TEST_SETUP_EXCEPT();
@@ -51,7 +52,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a lw which results in a lpf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF &&
-        excpt.tinst == TINST_LOAD(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_LOAD)
     );
 
     TEST_SETUP_EXCEPT();
@@ -59,7 +60,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a lwu which results in a lpf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF &&
-        excpt.tinst == TINST_LOAD(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_LOAD)
     );
 
     TEST_SETUP_EXCEPT();
@@ -67,7 +68,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a ld which results in a lpf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_LPF &&
-        excpt.tinst == TINST_LOAD(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_LOAD)
     );
 
     value = 0xdeadbeef;
@@ -77,7 +78,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a sb which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_STORE(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_STORE)
     );
 
     TEST_SETUP_EXCEPT();
@@ -85,7 +86,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a sh which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_STORE(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_STORE)
     );
 
     TEST_SETUP_EXCEPT();
@@ -93,7 +94,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a sw which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_STORE(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_STORE)
     );
 
     TEST_SETUP_EXCEPT();
@@ -101,7 +102,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a sd which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_STORE(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_STORE)
     );
 
     TEST_SETUP_EXCEPT();
@@ -109,7 +110,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoswap.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -117,7 +118,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoadd.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -125,7 +126,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoxor.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+       TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -133,7 +134,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoand.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -141,7 +142,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoor.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -149,7 +150,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amomin.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -157,7 +158,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amomax.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -165,7 +166,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amominu.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -173,7 +174,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amomaxu.w which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -181,7 +182,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoswap.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -189,7 +190,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoadd.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -197,7 +198,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoxor.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -205,7 +206,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoand.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -213,7 +214,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amoor.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -221,7 +222,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amomin.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -229,7 +230,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amomax.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -237,7 +238,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amominu.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_SETUP_EXCEPT();
@@ -245,7 +246,7 @@ bool tinst_tests(){
     TEST_ASSERT("correct tinst when executing a amomaxu.d which results in a spf",
         excpt.triggered == true && 
         excpt.cause == CAUSE_SPF &&
-        excpt.tinst == TINST_AMO(read_instruction(excpt.epc))
+        TINST_CHECK(TINST_AMO)
     );
 
     TEST_END();
