@@ -219,6 +219,12 @@ failed:\
     TEST_ASSERT(name, ((rd) == (val)), "%16c %016lx %016lx", '-', val, rd);\
 }
 
+#define check_csr_rd_mask(name, addr, rd, mask){\
+    uint64_t val = CSRR(addr);\
+    val = val & mask;\
+    TEST_ASSERT(name, ((rd) == (val)), "%16c %016lx %016lx", '-', val, rd);\
+}
+
 static inline uint64_t read64(uintptr_t addr){
     return *((volatile uint64_t*) addr);
 }
