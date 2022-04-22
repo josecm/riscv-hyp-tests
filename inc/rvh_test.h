@@ -133,9 +133,11 @@ extern size_t test_table_size;
 }
 
 #define TEST_SETUP_EXCEPT() {\
+    __sync_synchronize();\
     excpt.testing = true;\
     excpt.triggered = false;\
     excpt.fault_inst = 0;\
+    __sync_synchronize();\
     DEBUG("setting up exception test");\
 }
 
