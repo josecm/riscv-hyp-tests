@@ -36,7 +36,7 @@ $ PLAT=${target_platform} make
 
 The compilation result is located at *build/*`${target_platform}`*/rvh_test.elf* or *rvh_test.bin*.
 
-### About failure
+### Trouble-shooting
 
 #### *boot.S:6: Error: unrecognized opcode `csrwi sscratch,0xf'*
 
