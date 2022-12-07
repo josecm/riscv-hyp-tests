@@ -48,7 +48,18 @@ ld_file_final:=$(build_dir)/$(ld_file)
 deps:=$(patsubst  %.o, %.d, $(objs)) $(ld_file_final).d
 dirs:=$(sort $(dir $(objs) $(deps)))
 
-GENERIC_FLAGS += -march=rv64imac -mabi=lp64 -g3 -mcmodel=medany -O3 $(inc_dirs)
+# For RISC-V GCC versions greater than 10, instructions such as csrwi are
+# grouped separately under the zicsr extension and need to be specified
+# explicitly by appending '_zicsr' to the -march parameter. Below, the
+# variable GCCVERSION only gets defined if the GCC version is > 10.
+GCCVERSION := $(shell $(CC) -dumpversion | awk -F. '$$1 > 10 { print $$1 }')
+ifdef GCCVERSION
+	GENERIC_FLAGS += -march=rv64imac_zicsr
+else
+	GENERIC_FLAGS += -march=rv64imac
+endif
+
+GENERIC_FLAGS += -mabi=lp64 -g3 -mcmodel=medany -O3 $(inc_dirs)
 ASFLAGS = $(GENERIC_FLAGS)
 CFLAGS = $(GENERIC_FLAGS)
 LDFLAGS = -ffreestanding -nostartfiles -static $(GENERIC_FLAGS)
