@@ -20,9 +20,6 @@ SECTIONS {
 		*(.text)
 	} 
 
-    . = ALIGN(0x1000);
-    .tohost : { *(.tohost) }
-
 	.rodata :  {
 		*(.rodata)
 	}
@@ -38,7 +35,12 @@ SECTIONS {
 		*(.data)
 	}
 
-	.bss (NOLOAD) :  {	
+	// HTIF memory needs to be located on its own page
+	.tohost ALIGN(0x1000) :  {
+		*(.tohost)
+	}
+
+	.bss ALIGN(0x1000) (NOLOAD) :  {
 		__bss_start = .;
 		*(.bss) 
 		*(.sbss) 
