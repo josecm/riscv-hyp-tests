@@ -254,7 +254,7 @@ bool m_and_hs_using_vs_access(){
     hsvw(vaddr, ((uint32_t)-1));
     val = hlvw(vaddr);
     valu = hlvwu(vaddr);
-    printf("val 0x%llx, valu 0x%llx\n", val, valu);
+    DEBUG("val 0x%llx, valu 0x%llx\n", val, valu);
     TEST_ASSERT("hs hlvw vs hlvwu",
         excpt.triggered == false && val == (-1) && valu == ((uint32_t)-1)
     );
@@ -404,7 +404,7 @@ bool m_and_hs_using_vs_access(){
     );
 
     vaddr = vs_page_base(VSI_GUR);
-    INFO_PRINT(vaddr);
+    DEBUG_PRINT(vaddr);
     TEST_SETUP_EXCEPT();
     val = hlvb(vaddr);
     TEST_ASSERT("hs hlvb on ro 2-stage page successfull",
