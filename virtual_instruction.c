@@ -104,8 +104,7 @@ bool virtual_instruction() {
     TEST_SETUP_EXCEPT();
     time = CSRR(time);
     TEST_ASSERT("vs access to time casuses succsseful with mcounteren.tm and hcounteren.tm set",
-        excpt.triggered == true &&
-        excpt.cause == CAUSE_ILI
+        excpt.triggered == false
     );
 
     //////////////////////////////////////////////////////////////////////
