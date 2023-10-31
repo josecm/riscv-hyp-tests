@@ -13,11 +13,13 @@ $(error Undefined platform)
 endif
 endif
 
+log_dir:=log
 build_dir:=build/$(PLAT)
 plat_dir:=platform/$(PLAT)
 ifeq ($(wildcard $(plat_dir)),)
 $(error unsupported platform $(PLAT))
 else
+$(shell mkdir -p $(log_dir))
 $(shell mkdir -p $(build_dir))
 endif
 
@@ -59,8 +61,8 @@ ifdef GCCVERSION
 else
 	GENERIC_FLAGS += -march=rv64imac
 endif
-
 GENERIC_FLAGS += -mabi=lp64 -g3 -mcmodel=medany -O3 $(inc_dirs)
+
 ASFLAGS = $(GENERIC_FLAGS)
 CFLAGS = $(GENERIC_FLAGS)
 LDFLAGS = -ffreestanding -nostartfiles -static $(GENERIC_FLAGS)
@@ -73,6 +75,7 @@ $(TARGET).bin: $(TARGET).elf
 $(TARGET).elf: $(objs) $(ld_file_final)
 	$(CC) $(LDFLAGS) -T$(ld_file_final) $(objs) -o $@
 	$(OBJDUMP) -S $@ > $(TARGET).asm
+	$(OBJDUMP) -D $@ > $(TARGET).dump
 	$(READELF) -a -W $@ > $(@).txt
 
 $(build_dir)/%.o: %.[c,S] $(build_dir)/%.d
@@ -97,6 +100,7 @@ endif
 
 clean:
 	rm -rf $(build_dir)
+	rm -rf $(log_dir)
 
 clean_objs:
 	rm -rf $(build_dir)/**.o
