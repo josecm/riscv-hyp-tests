@@ -110,7 +110,7 @@ extern size_t test_table_size;
 #define TEST_START()\
     const char* __test_name = __func__;\
     bool test_status = true;\
-    if(LOG_LEVEL >= LOG_INFO) printf(CBLU "%-70s" CDFLT, __test_name);\
+    if(LOG_LEVEL >= LOG_INFO) printf(CBLU "%-85s" CDFLT, __test_name);\
     if(LOG_LEVEL >= LOG_DETAIL) printf("\n");
 
 #define TEST_REGISTER(test)\
@@ -119,11 +119,11 @@ extern size_t test_table_size;
 
 #define TEST_ASSERT(test, cond, ...) {\
     if(LOG_LEVEL >= LOG_DETAIL){\
-        size_t line_size = 60;\
+        size_t line_size = 80;\
         size_t size = strlen(test);\
-        printf(CBLU "\t%-70.*s" CDFLT, line_size, test);\
+        printf(CBLU "\t%-85.*s" CDFLT, line_size, test);\
         for(int i = line_size; i < size; i+=line_size)\
-            printf(CBLU "\n\t%-70.*s" CDFLT, line_size, &test[i]);\
+            printf(CBLU "\n\t%-85.*s" CDFLT, line_size, &test[i]);\
         printf("%s" CDFLT, (cond) ? CGRN "PASSED" : CRED "FAILED");\
         if(!(cond)) { printf("\n\t("); printf(""__VA_ARGS__); printf(")"); }\
         printf("\n");\
