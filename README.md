@@ -16,6 +16,7 @@ The target platform on which the test will run should be specified by setting th
 | *QEMU* | `qemu` |
 | *Rocket Chip Emulator* | `rocket_emul` |
 | *Rocket Chip FPGA* | `rocket_fpga` |
+| *Spike Emulator* | `spike` |
 
 ### Output level
 
@@ -35,6 +36,10 @@ $ PLAT=${target_platform} make
 ```
 
 The compilation result is located at *build/*`${target_platform}`*/rvh_test.elf* or *rvh_test.bin*.
+
+### Run
+
+[`scripts/run_on_spike.sh`](scripts/run_on_spike.sh) is a script to run on spike
 
 ### Trouble-shooting
 
