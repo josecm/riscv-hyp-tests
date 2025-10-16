@@ -11,12 +11,12 @@
 // #include <sbi_utils/serial/uart8250.h>
 #include "uart8250.h"
 
-#define readb(addr)  (*((volatile uint8_t*)addr))
+#define readb(addr)  (*(volatile uint8_t*)(addr))
 #define writeb(val, addr)  (*(volatile uint8_t*)(addr) = val)
-#define readw(addr)  (*((volatile uint16_t*)addr))
+#define readw(addr)  (*(volatile uint16_t*)(addr))
 #define writew(val, addr)  (*(volatile uint16_t*)(addr) = val)
-#define readl(addr)  (*((volatile uint32_t*)addr))
-#define writel(val, addr)  (*((volatile uint32_t*)addr) = val)
+#define readl(addr)  (*(volatile uint32_t*)(addr))
+#define writel(val, addr)  (*(volatile uint32_t*)(addr) = val)
 
 
 /* clang-format off */
